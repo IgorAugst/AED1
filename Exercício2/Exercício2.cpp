@@ -74,9 +74,26 @@ int ocorrencias(LISTA* l, int x){
     return count;
 }
 
+bool identicas(LISTA* l1, LISTA *l2){
+    if(l1->nroElementos != l2->nroElementos){
+        return false;
+    }
+
+    for (int i=0; i<l1->nroElementos; i++){
+        if(l1->A[i].Id != l2->A[i].Id){
+            return false;
+        }
+    }
+
+    return true;
+}
+
 int main(){
     LISTA l;
     inicializarLista(&l);
+
+    LISTA m;
+    inicializarLista(&m);
 
     for(int i=0; i<10; i++){
         REGISTRO a;
@@ -84,5 +101,19 @@ int main(){
         inserirElemento(&l,i,a);
     }
 
-    exibirElementos(&l);
+    for(int i=0; i<10; i++){
+        REGISTRO a;
+        a.Id=i;
+        inserirElemento(&m,i,a);
+    }
+
+    REGISTRO a;
+    a.Id=85;
+    inserirElemento(&l,2,a);
+
+    REGISTRO b;
+    b.Id=5;
+    inserirElemento(&m,2,b);
+
+    printf(identicas(&l,&m)?"true":"false");
 }
