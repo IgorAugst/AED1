@@ -88,6 +88,45 @@ bool identicas(LISTA* l1, LISTA *l2){
     return true;
 }
 
+int buscaSentinela(LISTA *l, int chave){
+    l->A[l->nroElementos].Id=chave;
+    int i=0;
+    
+    while(l->A[i].Id != chave) i++;
+    if(l->nroElementos == i) return -1;
+    else return i;
+
+}
+
+bool inserirOrdem(LISTA *l, REGISTRO r){
+    if(l->nroElementos >= MAX) return false;
+    int pos = l->nroElementos;
+
+    while(pos > 0 && l->A[pos-1].Id > r.Id){
+        l->A[pos] = l->A[pos-1];
+        pos--;
+    }
+
+    l->A[pos] = r;
+    l->nroElementos++;
+}
+
+int buscaBinaria(LISTA *l, int chave){
+    int esq, meio, dir;
+    esq=0;
+    dir=l->nroElementos-1;
+
+    while(esq<=dir){
+        meio=(esq+dir)/2;
+
+        if(l->A[meio].Id == chave) return meio;
+        if(l->A[meio].Id < chave) esq=meio+1;
+        else dir=meio-1;
+    }
+    return -1;
+
+}
+
 int main(){
     LISTA l;
     inicializarLista(&l);
