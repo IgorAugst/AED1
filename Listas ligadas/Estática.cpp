@@ -28,6 +28,30 @@ void inicializar(LISTA *l){
     l->A[MAX-1].proximo=-1;
 }
 
+void exibirLista(LISTA *l){
+    int pos=l->inicio;
+
+    while(pos != -1){
+        printf("%d", l->A[pos].Id);
+        pos=l->A[pos].proximo;
+    }
+}
+
+int buscaSequencial(LISTA *l, int chave, int* ant){
+    *ant= -1;
+    int pos=l->inicio;
+
+    while(pos != -1){
+        if(l->A[pos].Id >= chave) break;
+        *ant=pos;
+        pos=l->A[pos].proximo;
+    }
+
+    if(pos == -1) return -1;
+    if(l->A[pos].Id == chave) return pos;
+    else return -1;
+}
+
 int main(){
 
 }
