@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <malloc.h>
 
-
+/*
 // ######### ESCREVA O NROUSP AQUI
 char* nroUSP() {
     return("11796851");
@@ -16,7 +16,7 @@ char* nroUSP() {
 char* nome() {
     return("Igor Augusto dos Santos");
 }
-
+*/
 // elemento da lista
 typedef struct estr {
         int valor;
@@ -34,9 +34,14 @@ void adicionar(NO* *n, int valor){
 		(*n)->prox = NULL;
 		(*n)->valor=valor;
 	}else{
+		NO* pos = (*n);
+		while((*n)->prox != NULL){
+			pos=pos->prox;
+		}
 		NO* aux = (NO*)malloc(sizeof(NO));
 		aux->prox=NULL;
 		aux->valor=valor;
+		pos->prox=aux;
 	}
 }
 
@@ -54,9 +59,14 @@ NO* uniao(NO* p1, NO* p2) {
 
 	NO* pos1 = p1;
 	NO* pos2 = p2;
+	int ant = -1;
 
 	while(pos1 != NULL && pos2 != NULL){
-		
+		if(pos1->valor < pos2->valor && pos1->valor != ant){
+			adicionar(&resp,pos1->valor);
+			ant=pos1->valor;
+			pos1=pos1->prox;
+		}
 	}
 
 	return resp;
@@ -71,14 +81,27 @@ int main() {
 
 	NO* p1 = NULL;
 	NO* p2 = NULL;
+	NO* ant = NULL;
 
 	// aqui vc pode incluir codigo para inserir elementos
 	// de teste nas listas p1 e p2
+	adicionar(&p1, 1);
+	adicionar(&p1, 2);
+	adicionar(&p1, 3);
+	adicionar(&p1, 4);
+
+	NO* pos = p1;
+
+	while(pos != NULL){
+		printf("%d ", pos->valor);
+		pos=pos->prox;
+	}
 
 	// o EP sera testado com chamadas deste tipo
+	/*
 	NO* teste = NULL;
 	teste = uniao(p1,p2);
-
+*/
 }
 
 // por favor nao inclua nenhum código abaixo da função main()
