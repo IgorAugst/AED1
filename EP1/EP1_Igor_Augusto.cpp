@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <malloc.h>
 
-/*
+
 // ######### ESCREVA O NROUSP AQUI
 char* nroUSP() {
     return("11796851");
@@ -16,7 +16,7 @@ char* nroUSP() {
 char* nome() {
     return("Igor Augusto dos Santos");
 }
-*/
+
 // elemento da lista
 typedef struct estr {
         int valor;
