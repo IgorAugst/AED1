@@ -26,6 +26,7 @@ typedef struct estr {
 
 // funcao principal
 NO* uniao(NO* p1, NO* p2);
+void adicionar(NO* *n, int valor);
 
 
 void adicionar(NO* *n, int valor){
@@ -35,7 +36,7 @@ void adicionar(NO* *n, int valor){
 		(*n)->valor=valor;
 	}else{
 		NO* pos = (*n);
-		while((*n)->prox != NULL){
+		while(pos->prox != NULL){
 			pos=pos->prox;
 		}
 		NO* aux = (NO*)malloc(sizeof(NO));
@@ -62,11 +63,50 @@ NO* uniao(NO* p1, NO* p2) {
 	int ant = -1;
 
 	while(pos1 != NULL && pos2 != NULL){
-		if(pos1->valor < pos2->valor && pos1->valor != ant){
+		if(pos1->valor < pos2->valor){
+			if(pos1->valor != ant){
 			adicionar(&resp,pos1->valor);
 			ant=pos1->valor;
+			}
 			pos1=pos1->prox;
+			continue;
 		}
+
+		if(pos1->valor > pos2->valor){
+			if(pos2->valor != ant){
+			adicionar(&resp,pos2->valor);
+			ant=pos2->valor;
+			}			
+			pos2=pos2->prox;
+			continue;
+		}
+
+		if(pos1->valor == pos2->valor){
+			if(pos1->valor != ant){
+			adicionar(&resp,pos1->valor);
+			ant=pos1->valor;
+			}
+			pos2=pos2->prox;
+			pos1=pos1->prox;
+			continue;
+		}
+	}
+
+
+	while(pos1 != NULL){
+		if(pos1->valor != ant){
+			adicionar(&resp,pos1->valor);
+			ant=pos1->valor;
+		}
+		pos1=pos1->prox;
+	}
+
+	while(pos2 != NULL){
+		if(pos2->valor != ant){
+			adicionar(&resp,pos2->valor);
+			ant=pos2->valor;
+		}
+		pos2 = pos2->prox;
 	}
 
 	return resp;
@@ -81,27 +121,34 @@ int main() {
 
 	NO* p1 = NULL;
 	NO* p2 = NULL;
-	NO* ant = NULL;
+	NO* teste = NULL;
 
 	// aqui vc pode incluir codigo para inserir elementos
 	// de teste nas listas p1 e p2
-	adicionar(&p1, 1);
-	adicionar(&p1, 2);
-	adicionar(&p1, 3);
-	adicionar(&p1, 4);
 
-	NO* pos = p1;
+adicionar(&p1,3);
+adicionar(&p1,10);
+adicionar(&p1,12);
+adicionar(&p1,12);
+adicionar(&p1,15);
+adicionar(&p1,16);
+adicionar(&p1,20);
+adicionar(&p2,2);
+adicionar(&p2,11);
+adicionar(&p2,13);
+adicionar(&p2,13);
+adicionar(&p2,19);
+adicionar(&p2,20);
 
-	while(pos != NULL){
-		printf("%d ", pos->valor);
+	teste = uniao(p1,p2);
+
+	NO* pos = teste;
+
+	while(pos!=NULL){
+		printf("%d ",pos->valor);
 		pos=pos->prox;
 	}
 
-	// o EP sera testado com chamadas deste tipo
-	/*
-	NO* teste = NULL;
-	teste = uniao(p1,p2);
-*/
 }
 
 // por favor nao inclua nenhum código abaixo da função main()
