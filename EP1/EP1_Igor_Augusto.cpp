@@ -126,19 +126,17 @@ int main() {
 	// aqui vc pode incluir codigo para inserir elementos
 	// de teste nas listas p1 e p2
 
-adicionar(&p1,3);
-adicionar(&p1,10);
-adicionar(&p1,12);
-adicionar(&p1,12);
-adicionar(&p1,15);
-adicionar(&p1,16);
-adicionar(&p1,20);
-adicionar(&p2,2);
-adicionar(&p2,11);
-adicionar(&p2,13);
-adicionar(&p2,13);
-adicionar(&p2,19);
-adicionar(&p2,20);
+adicionar(&p1,5);
+adicionar(&p1,5);
+adicionar(&p1,5);
+adicionar(&p1,5);
+adicionar(&p1,5);
+adicionar(&p1,5);
+adicionar(&p1,5);
+adicionar(&p1,5);
+adicionar(&p1,5);
+adicionar(&p2,6);
+
 
 	teste = uniao(p1,p2);
 
