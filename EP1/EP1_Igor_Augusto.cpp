@@ -127,15 +127,19 @@ int main() {
 	// de teste nas listas p1 e p2
 
 adicionar(&p1,0);
+adicionar(&p1,1);
 adicionar(&p1,3);
-adicionar(&p1,3);
-adicionar(&p1,7);
+adicionar(&p1,5);
 adicionar(&p1,8);
-adicionar(&p2,1);
-adicionar(&p2,2);
-adicionar(&p2,2);
-adicionar(&p2,5);
+adicionar(&p1,8);
+adicionar(&p1,10);
+adicionar(&p2,3);
 adicionar(&p2,7);
+adicionar(&p2,7);
+adicionar(&p2,8);
+adicionar(&p2,9);
+
+
 
 
 	teste = uniao(p1,p2);
