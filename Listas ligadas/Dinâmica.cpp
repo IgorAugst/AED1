@@ -148,6 +148,7 @@ void destruir(lista *l){
     l->inicio = NULL;
 }
 
+
 int main(){
     lista a;
     inicializar(&a);
