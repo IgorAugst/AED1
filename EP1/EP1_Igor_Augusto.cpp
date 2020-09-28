@@ -119,38 +119,6 @@ NO* uniao(NO* p1, NO* p2) {
 //----------------------------------------------------------------
 int main() {
 
-	NO* p1 = NULL;
-	NO* p2 = NULL;
-	NO* teste = NULL;
-
-	// aqui vc pode incluir codigo para inserir elementos
-	// de teste nas listas p1 e p2
-
-adicionar(&p1,0);
-adicionar(&p1,1);
-adicionar(&p1,3);
-adicionar(&p1,5);
-adicionar(&p1,8);
-adicionar(&p1,8);
-adicionar(&p1,10);
-adicionar(&p2,3);
-adicionar(&p2,7);
-adicionar(&p2,7);
-adicionar(&p2,8);
-adicionar(&p2,9);
-
-
-
-
-	teste = uniao(p1,p2);
-
-	NO* pos = teste;
-
-	while(pos!=NULL){
-		printf("%d ",pos->valor);
-		pos=pos->prox;
-	}
-
 }
 
 // por favor nao inclua nenhum código abaixo da função main()
