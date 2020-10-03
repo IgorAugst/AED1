@@ -118,7 +118,7 @@ NO* uniao(NO* p1, NO* p2) {
 // use main() apenas para fazer chamadas de teste ao seu programa
 //----------------------------------------------------------------
 int main() {
-
+	
 }
 
 // por favor nao inclua nenhum código abaixo da função main()
