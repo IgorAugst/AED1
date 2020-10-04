@@ -46,18 +46,39 @@ int pop(PILHA* p){
     return ch;
 }
 
-int main(){
-    PILHA p;
-    inicializar(&p);
-    
-    for(int i=0; i<10; i++){
-        push(&p, i);
+NO* copiaInvertida(NO* p){
+    PILHA aux1;
+    inicializar(&aux1);
+    while(p != NULL){
+        push(&aux1,p->chave);
+        p=p->prox;
     }
 
-    int j = 0;
-    while ((j=pop(&p)) != -1)
-    {
+    PILHA aux2;
+    inicializar(&aux2);
+    int j=0;
+    while((j=pop(&aux1)) != -1){
+        push(&aux2,j);
+    }
+
+    return(aux2.topo);
+}
+
+int main(){
+    PILHA p1;
+    inicializar(&p1);
+
+    for(int i = 0; i<10; i++){
+        push(&p1, i);
+    }
+
+    PILHA p2;
+    inicializar(&p2);
+
+    p2.topo = copiaInvertida(p1.topo);
+
+    int j=0;
+    while((j=pop(&p2)) != -1){
         printf("%d ", j);
     }
-    
 }
