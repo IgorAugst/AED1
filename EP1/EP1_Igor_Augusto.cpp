@@ -6,6 +6,52 @@
 #include <malloc.h>
 
 
+#pragma region teste
+
+typedef struct estr {
+        int valor;
+        struct estr* prox;
+} NO;
+
+
+typedef struct{
+    NO* inicio;
+}lista;
+
+void inicializar(lista *l){
+    l->inicio = NULL;
+}
+
+void exibirLista(lista *l){
+    NO* pos = l->inicio;
+
+    while(pos != NULL){
+        printf("%d ", pos->valor);
+        pos = pos->prox;
+    }
+}
+
+NO* UltElemento(lista *l){
+    NO* pos = l->inicio;
+    if(pos != NULL)
+        while(pos->prox) pos = pos->prox;
+    return pos;
+}
+
+
+void anexar(lista *l, int chave){
+    NO* novo;
+    NO* ant = UltElemento(l);
+
+    novo = (NO*)malloc(sizeof(NO));
+    novo->valor = chave;
+    novo->prox = NULL;
+    if(!ant) l->inicio = novo;
+    else ant->prox = novo;
+}
+
+#pragma endregion
+
 // ######### ESCREVA O NROUSP AQUI
 char* nroUSP() {
     return("11796851");
@@ -18,10 +64,6 @@ char* nome() {
 }
 
 // elemento da lista
-typedef struct estr {
-        int valor;
-        struct estr* prox;
-} NO;
 
 
 // funcao principal
@@ -118,6 +160,37 @@ NO* uniao(NO* p1, NO* p2) {
 // use main() apenas para fazer chamadas de teste ao seu programa
 //----------------------------------------------------------------
 int main() {
+	lista l1;
+	inicializar(&l1);
+	lista l2;
+	inicializar(&l2);
+
+anexar(&l1,5);
+anexar(&l1,15);
+anexar(&l1,17);
+anexar(&l1,17);
+anexar(&l1,18);
+anexar(&l1,19);
+anexar(&l1,19);
+anexar(&l1,19);
+anexar(&l1,19);
+anexar(&l1,20);
+anexar(&l2,17);
+anexar(&l2,18);
+anexar(&l2,20);
+
+exibirLista(&l1);
+printf("--\n");
+exibirLista(&l2);
+printf("---------------\n");
+
+lista aux;
+inicializar(&aux);
+
+aux.inicio = uniao(l1.inicio, l2.inicio);
+
+exibirLista(&aux);
+
 	
 }
 
