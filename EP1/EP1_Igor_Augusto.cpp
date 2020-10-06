@@ -165,7 +165,7 @@ int main() {
 	lista l2;
 	inicializar(&l2);
 
-/*anexar(&l1,5);
+anexar(&l1,5);
 anexar(&l1,10);
 anexar(&l1,15);
 anexar(&l1,20);
@@ -177,7 +177,7 @@ anexar(&l2,11);
 anexar(&l2,22);
 anexar(&l2,33);
 anexar(&l2,44);
-anexar(&l2,55);*/
+anexar(&l2,55);
 
 exibirLista(&l1);
 printf("--\n");
@@ -190,6 +190,34 @@ inicializar(&aux);
 aux.inicio = uniao(l1.inicio, l2.inicio);
 
 exibirLista(&aux);
+
+//-------------------------------------------------------------------
+printf("\n\n\n\n");
+	lista l3;
+	inicializar(&l3);
+	lista l4;
+	inicializar(&l4);
+
+anexar(&l3,5);
+anexar(&l3,10);
+anexar(&l3,30);
+
+anexar(&l4,1);
+anexar(&l4,11);
+anexar(&l4,22);
+
+
+exibirLista(&l3);
+printf("--\n");
+exibirLista(&l4);
+printf("---------------\n");
+
+lista aux5;
+inicializar(&aux5);
+
+aux5.inicio = uniao(l3.inicio, l4.inicio);
+
+exibirLista(&aux5);
 
 	
 }

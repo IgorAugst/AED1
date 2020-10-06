@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <malloc.h>
+
+
+// ######### ESCREVA O NROUSP AQUI
+const char* nroUSP() {
+    return("0000000");
+}
+
+
+// ######### ESCREVA SEU NOME AQUI
+const char* nome() {
+    return("kkkkkkkkkk");
+}
+
+// elemento da pilha
+typedef struct estrutura {
+	struct estrutura *prox;
+       	int tipo; // 1=char e 2=float
+       	union {
+              	char simbolo;
+              	float valor;
+       	};
+} NO;
+
+
+
+
+// funcao principal (retorna float e int)
+float calcular(char* expressao, int* codigo);
+
+
+//------------------------------------------
+// O EP consiste em implementar esta funcao
+// e outras funcoes auxiliares que esta
+// necessitar
+//------------------------------------------
+float calcular(char* expressao, int* codigo){
+
+	float resp = 0.0;
+	*codigo = 999; 
+
+	// seu codigo AQUI
+
+	return resp;
+}
+
+
+
+//----------------------------------------------------------------
+// use main() apenas para fazer chamadas de teste ao seu programa
+//----------------------------------------------------------------
+int main() {
+
+
+	// o EP sera testado com chamadas deste tipo
+
+	char exp[200];
+	strcpy(exp, "(7*5)");
+
+	int codigo;
+
+	float resp = calcular(exp,&codigo);
+
+
+}
+
+// por favor nao inclua nenhum código abaixo da função main()
