@@ -165,19 +165,19 @@ int main() {
 	lista l2;
 	inicializar(&l2);
 
-anexar(&l1,5);
+/*anexar(&l1,5);
+anexar(&l1,10);
 anexar(&l1,15);
-anexar(&l1,17);
-anexar(&l1,17);
-anexar(&l1,18);
-anexar(&l1,19);
-anexar(&l1,19);
-anexar(&l1,19);
-anexar(&l1,19);
 anexar(&l1,20);
-anexar(&l2,17);
-anexar(&l2,18);
-anexar(&l2,20);
+anexar(&l1,25);
+anexar(&l1,30);
+
+anexar(&l2,1);
+anexar(&l2,11);
+anexar(&l2,22);
+anexar(&l2,33);
+anexar(&l2,44);
+anexar(&l2,55);*/
 
 exibirLista(&l1);
 printf("--\n");
