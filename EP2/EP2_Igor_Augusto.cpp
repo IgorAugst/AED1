@@ -71,7 +71,7 @@ NO pop(PILHA* p){
 float calcular(char* expressao, int* codigo){
 
 	float resp = 0.0;
-	*codigo = 999; 
+	*codigo = -1; 
 
     PILHA pi;
     int i = 0;
@@ -86,13 +86,67 @@ float calcular(char* expressao, int* codigo){
         }
 
         if(expressao[i] == ')'){
+            float a,b;
+            char op;
             NO saida = pop(&pi);
-            i=i+1;
+            saida = pop(&pi);
+
+            if(saida.tipo != 2){
+                *codigo = -1;
+                return 0.0;
+            }
+            b = saida.valor;
+            saida = pop(&pi);
+
+            if(saida.tipo != 1){
+                *codigo = -1;
+                return 0.0;
+            }
+            op = saida.simbolo;
+            saida = pop(&pi);
+
+            if(saida.tipo != 2){
+                *codigo = -1;
+                return 0.0;
+            }
+            a = saida.valor;
+            saida = pop(&pi);
+
+            switch (op)
+            {
+            case '+':
+                push(&pi, 2, a+b, '.');
+                break;
+            case '-':
+                push(&pi, 2, a-b, '.');
+                break;
+            case '*':
+                push(&pi, 2, a*b, '.');
+                break;
+            case '/':
+                if(b==0){
+                    *codigo=0;
+                    return 0.0;
+                }
+                push(&pi, 2, a/b, '.');
+                break;         
+            default:
+                *codigo = -1;
+                return 0.0;
+                break;
+            }
+            
         }
         i++;
     }
 
-	return resp;
+    NO res = pop(&pi);
+    if(res.tipo != 2 || pi.tamanho != 0){
+        *codigo = -1;
+        return 0.0;
+    }
+    *codigo = 1;
+	return res.valor;
 }
 
 
@@ -104,13 +158,25 @@ int main() {
 
 
 	// o EP sera testado com chamadas deste tipo
+    char testes[7][200]{
+        "(1+1",
+        "(((((2*3)+5)*3)-1)-9)",
+        "((1+5)-((3*2)+4))",
+        "(0*(((1+(2*4))-6)/6))",
+        "((1+(8*9))/((2-1)+9))",
+        "((2+5)/(7-(1+6)))",
+        "(1=9)"
+    };
 
-	char exp[200];
-	strcpy(exp, "(7*5)");
+    for(int i = 0; i<7; i++){
+        char exp[200];
+        int codigo;
+        strcpy(exp,testes[i]);
+        float resp = calcular(exp,&codigo);
 
-	int codigo;
-
-	float resp = calcular(exp,&codigo);
+        printf("Expressao: %s\nResultado: %f\nCodigo: %d\n", testes[i], resp, codigo);
+        printf("-----------\n");
+    }
 
 
 }
