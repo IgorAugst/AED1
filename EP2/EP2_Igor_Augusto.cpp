@@ -112,6 +112,11 @@ float calcular(char* expressao, int* codigo){
             a = saida.valor;
             saida = pop(&pi);
 
+            if(saida.simbolo != '('){
+                *codigo = -1;
+                return 0.0;
+            }
+
             switch (op)
             {
             case '+':
@@ -158,18 +163,20 @@ int main() {
 
 
 	// o EP sera testado com chamadas deste tipo
-    char testes[8][200]{
-        "(1+1",
+    char testes[10][200]{
+        "(((9+2)*3)/(7-3))",
         "(((((2*3)+5)*3)-1)-9)",
         "((1+5)-((3*2)+4))",
         "(0*(((1+(2*4))-6)/6))",
         "((1+(8*9))/((2-1)+9))",
         "((2+5)/(7-(1+6)))",
         "(1=9)",
-        "((3/2)/(2/9))"
+        "((3/2)/(2/9))",
+        "1+1)",
+        "(1/3)"
     };
 
-    for(int i = 0; i<8; i++){
+    for(int i = 0; i<10; i++){
         char exp[200];
         int codigo;
         strcpy(exp,testes[i]);
