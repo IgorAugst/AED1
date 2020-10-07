@@ -158,17 +158,18 @@ int main() {
 
 
 	// o EP sera testado com chamadas deste tipo
-    char testes[7][200]{
+    char testes[8][200]{
         "(1+1",
         "(((((2*3)+5)*3)-1)-9)",
         "((1+5)-((3*2)+4))",
         "(0*(((1+(2*4))-6)/6))",
         "((1+(8*9))/((2-1)+9))",
         "((2+5)/(7-(1+6)))",
-        "(1=9)"
+        "(1=9)",
+        "((3/2)/(2/9))"
     };
 
-    for(int i = 0; i<7; i++){
+    for(int i = 0; i<8; i++){
         char exp[200];
         int codigo;
         strcpy(exp,testes[i]);
