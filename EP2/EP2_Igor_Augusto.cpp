@@ -35,6 +35,8 @@ typedef struct
 
 // funcao principal (retorna float e int)
 float calcular(char* expressao, int* codigo);
+void push(PILHA* p, int tipo, float valor, char carac);
+NO pop(PILHA* p);
 
 
 void push(PILHA* p, int tipo, float valor, char carac){
@@ -160,32 +162,6 @@ float calcular(char* expressao, int* codigo){
 // use main() apenas para fazer chamadas de teste ao seu programa
 //----------------------------------------------------------------
 int main() {
-
-
-	// o EP sera testado com chamadas deste tipo
-    char testes[10][200]{
-        "(((9+2)*3)/(7-3))",
-        "(((((2*3)+5)*3)-1)-9)",
-        "((1+5)-((3*2)+4))",
-        "(0*(((1+(2*4))-6)/6))",
-        "((1+(8*9))/((2-1)+9))",
-        "((2+5)/(7-(1+6)))",
-        "(1+9())",
-        "((3/2)/(2/9))",
-        "1+1)",
-        "((5)+(3))",
-    };
-
-    for(int i = 0; i<10; i++){
-        char exp[200];
-        int codigo;
-        strcpy(exp,testes[i]);
-        float resp = calcular(exp,&codigo);
-
-        printf("Expressao: %s\nResultado: %f\nCodigo: %d\n", testes[i], resp, codigo);
-        printf("-----------\n");
-    }
-
 
 }
 
