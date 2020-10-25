@@ -41,6 +41,7 @@ MATRIZ *fazerMatriz(TIPOINFO mat[][3], int x, int y)
                 ant->prox = aux;
             }
 
+            aux->prox = NULL;
             ant=aux;
         }
     }
