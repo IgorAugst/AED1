@@ -18,7 +18,7 @@ typedef struct
     int maxcol;
 } MATRIZ;
 
-MATRIZ *fazerMatriz(TIPOINFO mat[][4], int x, int y)
+MATRIZ *fazerMatriz(TIPOINFO mat[][100], int x, int y)
 {
     MATRIZ *resp = (MATRIZ *)malloc(sizeof(MATRIZ));
     resp->maxlin = x;
@@ -115,7 +115,7 @@ void zerarDiagonal(MATRIZ* m){
 }
 
 int main(){
-    int mat[4][4] = {{0,0,0,0},{1,1,1,1},{3,3,3,3},{4,4,4,4}};
+    int mat[4][100] = {{0,0,0,0},{1,1,1,1},{3,3,3,3},{4,4,4,4}};
 
     MATRIZ* res = fazerMatriz(mat, 4, 4);
 
