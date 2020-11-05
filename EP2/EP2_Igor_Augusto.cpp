@@ -163,7 +163,7 @@ float calcular(char* expressao, int* codigo){
 //----------------------------------------------------------------
 int main() {
     char testes[10][200]{
-        "((7*5)/(9-2))",
+        "(0*((((8+(2-4))/6)-5)*6))",
         "(5/(7-3)*5",
         "((((2*3)/0)*(3+5)-1)-9)",
         "((1+5)+((3*2)+4))",
@@ -184,6 +184,7 @@ int main() {
         printf("Expressao: %s\nResultado: %f\nCodigo: %d\n", testes[i], resp, codigo);
         printf("-----------\n");
     }
+    printf("%f", (-0)*0);
 }
 
 // por favor nao inclua nenhum código abaixo da função main()
