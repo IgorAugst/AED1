@@ -68,21 +68,28 @@ void print2DUtil(NO *raiz, int space)
     print2DUtil(raiz->esq, space);  
 }  
 
-void novoEsquerdo(NO* p){
-    int ch = 0;
-    if(p->dir != NULL) ch += p->dir->chave;
+void preOrdem(NO* r){
+    if(r){
+        printf("%d ", r->chave);
+        preOrdem(r->esq);
+        preOrdem(r->dir);
+    }
+}
 
-    ch += p->chave;
+void emOrdem(NO* r){
+    if(r){
+        emOrdem(r->esq);
+        printf("%d ", r->chave);
+        emOrdem(r->dir);
+    }
+}
 
-    if(p->esq != NULL)return;
-
-    NO* novo = (NO*)malloc(sizeof(NO));
-    
-    novo->chave = ch;
-    novo->dir = NULL;
-    novo->esq = NULL;
-
-    p->esq = novo;
+void posOrdem(NO* r){
+    if(r){
+        posOrdem(r->esq);
+        posOrdem(r->dir);
+        printf("%d ", r->chave);
+    }
 }
 
 int main()
@@ -92,7 +99,8 @@ int main()
 
     inserirNo(&raiz, raiz, 3, 1);
     inserirNo(&raiz, raiz, 1, 2);
-    //inserirNo(&raiz, raiz, 2, 1);
-    novoEsquerdo(raiz);
+    inserirNo(&raiz, raiz, 2, 1);
     print2DUtil(raiz, 0);
+    printf("\n");
+    posOrdem(raiz);
 }
