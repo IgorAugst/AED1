@@ -182,6 +182,55 @@ void preencherArvore(NO **raiz, int n)
     }
 }
 
+NO *busca(NO *raiz, int ch, NO **pai)
+{
+    NO *atual = raiz;
+    *pai = NULL;
+
+    while (atual)
+    {
+        if (atual->chave == ch)
+        {
+            return atual;
+        }
+
+        *pai = atual;
+        if (ch < atual->chave)
+            atual = atual->esq;
+        else
+            atual = atual->dir;
+    }
+
+    return NULL;
+}
+
+bool inserirABB(NO **raiz, int ch)
+{
+    NO *pai;
+    NO *atual = busca(*raiz, ch, &pai);
+
+    if (atual)
+        return false;
+
+    NO *novo = (NO *)malloc(sizeof(NO));
+    novo->chave = ch;
+    novo->esq = NULL;
+    novo->dir = NULL;
+
+    if (!pai)
+    {
+        *raiz = novo;
+        return true;
+    }
+
+    if (pai->chave > ch)
+        pai->esq = novo;
+    else
+        pai->dir = novo;
+
+    return true;
+}
+
 int main()
 {
     NO *raiz;

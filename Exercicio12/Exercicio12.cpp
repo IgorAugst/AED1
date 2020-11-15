@@ -5,6 +5,7 @@
 
 using namespace std;
 
+#pragma region implementacao
 typedef struct estrutura
 {
     int chave;
@@ -182,41 +183,100 @@ void preencherArvore(NO **raiz, int n)
     }
 }
 
+NO *busca(NO *raiz, int ch, NO **pai)
+{
+    NO *atual = raiz;
+    *pai = NULL;
 
-int altura(NO* p){
-    if(!p){
+    while (atual)
+    {
+        if (atual->chave == ch)
+        {
+            return atual;
+        }
+
+        *pai = atual;
+        if (ch < atual->chave)
+            atual = atual->esq;
+        else
+            atual = atual->dir;
+    }
+
+    return NULL;
+}
+
+bool inserirABB(NO **raiz, int ch)
+{
+    NO *pai;
+    NO *atual = busca(*raiz, ch, &pai);
+
+    if (atual)
+        return false;
+
+    NO *novo = (NO *)malloc(sizeof(NO));
+    novo->chave = ch;
+    novo->esq = NULL;
+    novo->dir = NULL;
+
+    if (!pai)
+    {
+        *raiz = novo;
+        return true;
+    }
+
+    if (pai->chave > ch)
+        pai->esq = novo;
+    else
+        pai->dir = novo;
+
+    return true;
+}
+
+#pragma endregion
+
+int altura(NO *p)
+{
+    if (!p)
+    {
         return 0;
     }
 
     int dir = altura(p->dir);
     int esq = altura(p->esq);
 
-    if(dir>esq){
-        return dir+1;
-    }else{
-        return esq+1;
+    if (dir > esq)
+    {
+        return dir + 1;
+    }
+    else
+    {
+        return esq + 1;
     }
 }
 
-
-int menorChave(NO* p){
-    if(!p){
+int menorChave(NO *p)
+{
+    if (!p)
+    {
         return 200;
     }
 
     int dir = menorChave(p->dir);
     int esq = menorChave(p->esq);
 
-    if(p->chave < dir && p->chave < esq){
+    if (p->chave < dir && p->chave < esq)
+    {
         return p->chave;
     }
 
-    if(dir < esq){
+    if (dir < esq)
+    {
         return dir;
-    }else{
+    }
+    else
+    {
         return esq;
     }
-    
 }
 
 int main()
@@ -224,10 +284,15 @@ int main()
     NO *raiz;
     inicializar(&raiz);
 
-    preencherArvore(&raiz, 15);
+    int m[16] = {9, 5, 1, 4, 7, 8, 6, 3, 2, 1, 5, 6, 2, 98, 4, 9};
+
+    for (int i = 0; i < 16; i++)
+    {
+        inserirABB(&raiz, m[i]);
+    }
 
     print2DUtil(raiz, 0);
-    printf("\n");
+    printf("\n----------\n");
 
-    printf("%d", altura(raiz));
+    printf("%d", menorChave(raiz));
 }
