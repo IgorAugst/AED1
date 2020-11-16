@@ -293,6 +293,4 @@ int main()
 
     print2DUtil(raiz, 0);
     printf("\n----------\n");
-
-    printf("%d", menorChave(raiz));
 }
