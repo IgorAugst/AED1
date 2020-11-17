@@ -243,6 +243,7 @@ bool inserirABB(NO **raiz, int ch)
 #pragma endregion
 
 void organizar(NO **raiz);
+NO *erro(NO *p, int min, int max, NO** pai);
 
 NO *erro(NO *p, int min, int max, NO** pai)
 {
@@ -269,6 +270,17 @@ void organizar(NO **raiz)
     // seu codigo AQUI
     // sugestao: faca NO* p = *raiz para percorrer a arvore com p
     // nao use *raiz para mais nada, exceto quando precisar modificar este ponteiro (tipicamente quando exclur o no apontado por ele)
+
+    NO* pai = NULL;
+    NO* errado = erro(*raiz, INT_MIN, INT_MAX, &pai);
+
+    if(errado->dir == NULL && errado->esq == NULL){
+        if(pai){
+            pai->dir->chave == errado->chave ? pai->dir = NULL : pai->esq = NULL;
+            free(errado);
+            return;
+        }
+    }
 }
 
 //---------------------------------------------------------
@@ -287,14 +299,15 @@ int main()
     }
 
     NO *pai;
-    NO *aux = busca(raiz, 13, &pai);
-    aux->chave = 99;
+    NO *aux = busca(raiz, 14, &pai);
+    aux->chave = 10;
 
     //print2DUtil(raiz, 0);
-    printf("\n-----------\n");
+    //printf("\n-----------\n");
     pai = NULL;
     NO *e = erro(raiz, INT_MIN, INT_MAX, &pai);
     printf("pai: %d\nerro:%d", pai->chave, e->chave);
+    organizar(&raiz);
     print2DUtil(raiz, 0);
 }
 
