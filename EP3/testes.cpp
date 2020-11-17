@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
+#include <climits>
 #include <iostream>
 
 using namespace std;
@@ -243,17 +244,18 @@ bool inserirABB(NO **raiz, int ch)
 
 void organizar(NO **raiz);
 
-NO *erro(NO *p, int min, int max)
+NO *erro(NO **p, int min, int max, NO** pai)
 {
-    if (!p)
+    if (!(*p))
         return NULL;
 
-    if (p->chave < min || p->chave > max)
-        return p;
+    if ((*p)->chave < min || (*p)->chave > max)
+        return (*p);
 
-    NO *aux = erro(p->esq, min, p->chave - 1);
+    (*pai) = (*p);
+    NO *aux = erro(&((*p)->esq), min, (*p)->chave - 1, pai);
 
-    return aux ? aux : erro(p->dir, p->chave + 1, max);
+    return aux ? aux : erro(&((*p)->dir), (*p)->chave + 1, max, pai);
 }
 
 //------------------------------------------
@@ -281,14 +283,16 @@ int main()
         inserirABB(&raiz, m[i]);
     }
 
-    NO* pai;
-    NO* aux = busca(raiz, 13, &pai);
-    aux->chave = 13;
+    NO *pai;
+    NO *aux = busca(raiz, 13, &pai);
+    aux->chave = 9;
 
-    print2DUtil(raiz, 0);
+    //print2DUtil(raiz, 0);
     printf("\n-----------\n");
-    NO* e = erro(raiz, INT_MIN, INT_MAX);
-    printf("%d", e->chave);
+    pai = NULL;
+    NO *e = erro(&raiz, INT_MIN, INT_MAX, &pai);
+    printf("pai: %d\nerro:%d", pai->chave, e->chave);
+    print2DUtil(raiz, 0);
 }
 
 // por favor nao inclua nenhum codigo abaixo da funcao main()
