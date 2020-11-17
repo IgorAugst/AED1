@@ -244,18 +244,21 @@ bool inserirABB(NO **raiz, int ch)
 
 void organizar(NO **raiz);
 
-NO *erro(NO **p, int min, int max, NO** pai)
+NO *erro(NO *p, int min, int max, NO** pai)
 {
-    if (!(*p))
+    if (!p)
         return NULL;
 
-    if ((*p)->chave < min || (*p)->chave > max)
-        return (*p);
+    if (p->chave < min || p->chave > max)
+        return p;
 
-    (*pai) = (*p);
-    NO *aux = erro(&((*p)->esq), min, (*p)->chave - 1, pai);
+    (*pai) = p;
+    NO *aux = erro(p->esq, min, p->chave - 1, pai);
+    if(aux)
+        return aux;
 
-    return aux ? aux : erro(&((*p)->dir), (*p)->chave + 1, max, pai);
+    (*pai) = p;
+    return erro(p->dir, p->chave + 1, max, pai);
 }
 
 //------------------------------------------
@@ -285,12 +288,12 @@ int main()
 
     NO *pai;
     NO *aux = busca(raiz, 13, &pai);
-    aux->chave = 9;
+    aux->chave = 99;
 
     //print2DUtil(raiz, 0);
     printf("\n-----------\n");
     pai = NULL;
-    NO *e = erro(&raiz, INT_MIN, INT_MAX, &pai);
+    NO *e = erro(raiz, INT_MIN, INT_MAX, &pai);
     printf("pai: %d\nerro:%d", pai->chave, e->chave);
     print2DUtil(raiz, 0);
 }
