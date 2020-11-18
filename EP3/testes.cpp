@@ -243,9 +243,9 @@ bool inserirABB(NO **raiz, int ch)
 #pragma endregion
 
 void organizar(NO **raiz);
-NO *erro(NO *p, int min, int max, NO** pai);
+NO *erro(NO *p, int min, int max, NO **pai);
 
-NO *erro(NO *p, int min, int max, NO** pai)
+NO *erro(NO *p, int min, int max, NO **pai)
 {
     if (!p)
         return NULL;
@@ -255,7 +255,7 @@ NO *erro(NO *p, int min, int max, NO** pai)
 
     (*pai) = p;
     NO *aux = erro(p->esq, min, p->chave - 1, pai);
-    if(aux)
+    if (aux)
         return aux;
 
     (*pai) = p;
@@ -271,12 +271,24 @@ void organizar(NO **raiz)
     // sugestao: faca NO* p = *raiz para percorrer a arvore com p
     // nao use *raiz para mais nada, exceto quando precisar modificar este ponteiro (tipicamente quando exclur o no apontado por ele)
 
-    NO* pai = NULL;
-    NO* errado = erro(*raiz, INT_MIN, INT_MAX, &pai);
+    NO *pai = NULL;
+    NO *errado = erro(*raiz, INT_MIN, INT_MAX, &pai);
 
-    if(errado->dir == NULL && errado->esq == NULL){
-        if(pai){
+    if (errado->dir == NULL && errado->esq == NULL)
+    { // caso seja folha
+        if (pai)
+        { //se nao for a raiz
             pai->dir->chave == errado->chave ? pai->dir = NULL : pai->esq = NULL;
+            free(errado);
+            return;
+        }
+    }
+
+    if (errado->dir != NULL && errado->esq == NULL)
+    { // se tiver um filho na direita
+        if (pai)
+        {
+            pai->dir->chave == errado->chave ? pai->dir = errado->dir : pai->esq = errado->dir;
             free(errado);
             return;
         }
@@ -291,9 +303,9 @@ int main()
     NO *raiz;
     inicializar(&raiz);
 
-    int m[15] = {10, 5, 15, 3, 7, 13, 18, 2, 4, 6, 8, 12, 14, 17, 19};
+    int m[15] = {10, 5, 15, 3, 7, 13, 18, 2, 4, 6, 8, 14, 17, 19}; //removi o 12
 
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 14; i++)
     {
         inserirABB(&raiz, m[i]);
     }
@@ -307,7 +319,7 @@ int main()
     pai = NULL;
     NO *e = erro(raiz, INT_MIN, INT_MAX, &pai);
     printf("pai: %d\nerro:%d", pai->chave, e->chave);
-    organizar(&raiz);
+    //organizar(&raiz);
     print2DUtil(raiz, 0);
 }
 
