@@ -292,7 +292,7 @@ void organizar(NO **raiz)
     { // caso seja folha
         if (pai)
         { //se nao for a raiz
-            pai->dir->chave == errado->chave ? pai->dir = NULL : pai->esq = NULL; //segmentation fault (pai->dir && pai->dir->chave == errado->chave)
+            (pai->dir && pai->dir->chave == errado->chave) ? pai->dir = NULL : pai->esq = NULL; //segmentation fault (pai->dir && pai->dir->chave == errado->chave)
             free(errado);
             return;
         }
@@ -302,7 +302,7 @@ void organizar(NO **raiz)
     { // se tiver um filho na direita
         if (pai)
         {
-            pai->dir->chave == errado->chave ? pai->dir = errado->dir : pai->esq = errado->dir;
+            (pai->dir && pai->dir->chave == errado->chave) ? pai->dir = errado->dir : pai->esq = errado->dir;
             free(errado);
             return;
         }
@@ -312,7 +312,7 @@ void organizar(NO **raiz)
     { // se tiver um filho na esquerda
         if (pai)
         {
-            pai->dir->chave == errado->chave ? pai->dir = errado->esq : pai->esq = errado->esq;
+            (pai->dir && pai->dir->chave) == errado->chave ? pai->dir = errado->esq : pai->esq = errado->esq;
             free(errado);
             return;
         }
@@ -355,15 +355,15 @@ int main()
     inicializar(&raiz);
 
     int m[16] = {10, 5, 15, 3, 7, 13, 18, 2, 4, 15, 6, 8, 12, 14, 17, 19};
-    int tst[] = {10, 5};
+    int tst[] = {0,-1};
     for (int i = 0; i < 2; i++)
     {
         inserirABB(&raiz, tst[i]);
     }
 
     NO *pai;
-    NO *aux = busca(raiz, 5, &pai);
-    aux->chave = 12;
+    NO *aux = busca(raiz, -1, &pai);
+    aux->chave = 5;
 
     pai = NULL;
     printf(verifica(raiz, INT_MIN, INT_MAX) ? "\ntrue\n" : "\nfalse\n");
