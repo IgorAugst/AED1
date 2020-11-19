@@ -110,13 +110,5 @@ void organizar(NO **raiz)
 //---------------------------------------------------------
 // use main() para fazer chamadas de teste ao seu programa
 //---------------------------------------------------------
-/*
-int main()
-{
-    NO *arv = NULL;
 
-    // serao realizadas chamadas como esta:
-    // organizar(&arv);
-}
-*/
 // por favor nao inclua nenhum codigo abaixo da funcao main()
