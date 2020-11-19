@@ -240,6 +240,17 @@ bool inserirABB(NO **raiz, int ch)
 
     return true;
 }
+
+bool verifica(NO *p, int min, int max)
+{
+    if(p == NULL)
+        return true;
+
+    if(p->chave < min || p->chave > max)
+        return false;
+
+    return verifica(p->esq, min, p->chave-1) && verifica(p->dir, p->chave+1, max);
+}
 #pragma endregion
 
 void organizar(NO **raiz);
@@ -274,11 +285,14 @@ void organizar(NO **raiz)
     NO *pai = NULL;
     NO *errado = erro(*raiz, INT_MIN, INT_MAX, &pai);
 
+    if (errado == NULL)
+        return;
+
     if (errado->dir == NULL && errado->esq == NULL)
     { // caso seja folha
         if (pai)
         { //se nao for a raiz
-            pai->dir->chave == errado->chave ? pai->dir = NULL : pai->esq = NULL;
+            pai->dir->chave == errado->chave ? pai->dir = NULL : pai->esq = NULL; //segmentation fault (pai->dir && pai->dir->chave == errado->chave)
             free(errado);
             return;
         }
@@ -293,6 +307,43 @@ void organizar(NO **raiz)
             return;
         }
     }
+
+    if (errado->dir == NULL && errado->esq != NULL)
+    { // se tiver um filho na esquerda
+        if (pai)
+        {
+            pai->dir->chave == errado->chave ? pai->dir = errado->esq : pai->esq = errado->esq;
+            free(errado);
+            return;
+        }
+    }
+
+    if (errado->dir != NULL && errado->esq != NULL)
+    { // se tiver 2 filhos
+        NO *p = errado->esq;
+        NO *ant = errado;
+
+        while (p->dir != NULL)
+        {
+            ant = p;
+            p = p->dir;
+        }
+
+        if (ant->chave == errado->chave)
+        {
+            errado->chave = p->chave;
+            errado->esq = NULL;
+            free(p);
+            return;
+        }
+        else
+        {
+            errado->chave = p->chave;
+            ant->dir = NULL;
+            free(p);
+            return;
+        }
+    }
 }
 
 //---------------------------------------------------------
@@ -303,24 +354,21 @@ int main()
     NO *raiz;
     inicializar(&raiz);
 
-    int m[15] = {10, 5, 15, 3, 7, 13, 18, 2, 4, 6, 8, 14, 17, 19}; //removi o 12
-
-    for (int i = 0; i < 14; i++)
+    int m[16] = {10, 5, 15, 3, 7, 13, 18, 2, 4, 15, 6, 8, 12, 14, 17, 19};
+    int tst[] = {10, 5};
+    for (int i = 0; i < 2; i++)
     {
-        inserirABB(&raiz, m[i]);
+        inserirABB(&raiz, tst[i]);
     }
 
     NO *pai;
-    NO *aux = busca(raiz, 14, &pai);
-    aux->chave = 10;
+    NO *aux = busca(raiz, 5, &pai);
+    aux->chave = 12;
 
-    //print2DUtil(raiz, 0);
-    //printf("\n-----------\n");
     pai = NULL;
+    printf(verifica(raiz, INT_MIN, INT_MAX) ? "\ntrue\n" : "\nfalse\n");
     NO *e = erro(raiz, INT_MIN, INT_MAX, &pai);
-    printf("pai: %d\nerro:%d", pai->chave, e->chave);
-    //organizar(&raiz);
+    organizar(&raiz);
     print2DUtil(raiz, 0);
+    printf(verifica(raiz, INT_MIN, INT_MAX) ? "\ntrue\n" : "\nfalse\n");
 }
-
-// por favor nao inclua nenhum codigo abaixo da funcao main()
