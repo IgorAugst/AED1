@@ -254,7 +254,7 @@ int main()
 
     NO *pai;
     NO *aux = busca(raiz, 2, &pai);
-    aux->chave = 1;
+    aux->chave = 10;
 
     pai = NULL;
     printf(verifica(raiz, INT_MIN, INT_MAX) ? "\ntrue\n" : "\nfalse\n");
