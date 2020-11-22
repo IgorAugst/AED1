@@ -234,6 +234,38 @@ bool inserirABB(NO **raiz, int ch)
 
 #pragma endregion
 
-int main(){
+void exibirFolhas(NO* p){
+    if(!p)
+        return;
+
+    if(p->dir == NULL && p->esq == NULL){
+        printf("%d ", p->chave);
+    }else{
+        exibirFolhas(p->esq);
+        exibirFolhas(p->dir);
+    }
+}
+
+bool exibeAncestrais(NO* p, int x){
+    if(!p)
+        return false;
+
+    if(p->chave == x)
+        return true;
     
+    if(exibeAncestrais(p->dir, x) || exibeAncestrais(p->esq, x)){
+        printf("%d ", p->chave);
+        return true;
+    }
+
+    return false;
+}
+
+int main(){
+    NO* p;
+    inicializar(&p);
+    preencherArvore(&p, 20);
+    print2DUtil(p, 0);
+    printf("\n");
+    exibeAncestrais(p, 17);
 }
