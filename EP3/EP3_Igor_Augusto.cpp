@@ -18,9 +18,55 @@ typedef struct estr
     struct estr *dir;
 } NO;
 
+typedef struct elementoL
+{
+    NO *NoArvore;
+    NO *NoPai;
+    struct elementoL *prox;
+} NoLista;
+
+typedef struct
+{
+    NoLista *inicio;
+} lista;
+
 void organizar(NO **raiz);
 NO *erro(NO *p, int min, int max, NO **pai);
+void anexar(lista *l, NO *chave, NO* pai);
+void PreencherLista(lista *l, NO *p, NO* pai);
 
+void anexar(lista *l, NO *chave, NO* pai)
+{
+    NoLista *novo;
+    NoLista *ant = l->inicio;
+
+    if (ant != NULL)
+    {
+        while (ant->prox != NULL)
+            ant = ant->prox;
+    }
+
+    novo = (NoLista *)malloc(sizeof(NoLista));
+
+    novo->NoArvore = chave;
+    novo->NoPai = pai;
+    novo->prox = NULL;
+    if (!ant)
+        l->inicio = novo;
+    else
+        ant->prox = novo;
+}
+
+void PreencherLista(lista *l, NO *p, NO* pai)
+{
+    if (p)
+    {
+        PreencherLista(l, p->esq, p);
+        anexar(l, p, pai);
+        PreencherLista(l, p->dir, p);
+    }
+}
+/*
 NO *erro(NO *p, int min, int max, NO **pai)
 {
     if (!p)
@@ -37,14 +83,33 @@ NO *erro(NO *p, int min, int max, NO **pai)
     (*pai) = p;
     return erro(p->dir, p->chave + 1, max, pai);
 }
-
+*/
 //------------------------------------------
 // O EP consiste em implementar esta funcao
 //------------------------------------------
 void organizar(NO **raiz)
 {
-    NO *pai = NULL;
-    NO *errado = erro(*raiz, INT_MIN, INT_MAX, &pai);
+    lista *l = (lista*)malloc(sizeof(lista));
+    l->inicio = NULL;
+
+    PreencherLista(l, *raiz, NULL);
+
+    NoLista *atual = l->inicio;
+    int maior = INT_MIN;
+    NO* errado = NULL;
+    NO* pai = NULL;
+
+    while(atual){
+        if(atual->NoArvore->chave < maior){
+            errado = atual->NoArvore;
+            pai = atual->NoPai;
+            break;
+        }else{
+            maior = atual->NoArvore->chave;
+            atual = atual->prox;
+        }
+    }
+    
 
     if (errado == NULL)
         return;

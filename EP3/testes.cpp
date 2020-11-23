@@ -253,8 +253,8 @@ int main()
     }
 
     NO *pai;
-    NO *aux = busca(raiz, 2, &pai);
-    aux->chave = 10;
+    NO *aux = busca(raiz, 5, &pai);
+    aux->chave = 11;
 
     pai = NULL;
     printf(verifica(raiz, INT_MIN, INT_MAX) ? "\ntrue\n" : "\nfalse\n");
