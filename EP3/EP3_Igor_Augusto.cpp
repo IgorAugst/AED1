@@ -93,6 +93,7 @@ bool verificaLista(lista *l, int ignorar)
     {
         if (count == ignorar)
         {
+            count++;
             continue;
         }
         if (atual->NoArvore->chave < maior)
@@ -207,6 +208,8 @@ void organizar(NO **raiz)
             (pai->dir && pai->dir->chave == errado->chave) ? pai->dir = errado->dir : pai->esq = errado->dir;
             free(errado);
             return;
+        }else{
+            (*raiz) = errado->dir;
         }
     }
 
@@ -217,6 +220,8 @@ void organizar(NO **raiz)
             (pai->dir && pai->dir->chave) == errado->chave ? pai->dir = errado->esq : pai->esq = errado->esq;
             free(errado);
             return;
+        }else{
+            (*raiz) = errado->esq;
         }
     }
 

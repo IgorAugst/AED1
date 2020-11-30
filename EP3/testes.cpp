@@ -4,7 +4,7 @@
 #include <string.h>
 #include <climits>
 #include <iostream>
-#include "EP3_Igor_Augusto.cpp"
+#include "EP3_Igor_Augusto.cpp" //deixar o ep no msm diretorio
 
 using namespace std;
 
@@ -159,22 +159,22 @@ void exibirEmNivel(NO *raiz)
     }
 }
 
-void preencherArvore(NO **raiz, int n)
+void preencherArvore(NO **raiz, int n, int valores[])
 {
     FILA f;
     inicializarFila(&f);
-    NO *aux = inserirNo(raiz, (*raiz), 0, 1);
+    NO *aux = inserirNo(raiz, (*raiz), valores[0], 1);
     NO *prox;
     entrarFila(aux, &f);
     for (int i = 1; i < n; i++)
     {
         prox = sairFila(&f);
-        aux = inserirNo(raiz, prox, i, 1);
+        aux = inserirNo(raiz, prox, valores[i], 1);
         entrarFila(aux, &f);
         i++;
         if (i == n)
             return;
-        aux = inserirNo(raiz, prox, i, 2);
+        aux = inserirNo(raiz, prox, valores[i], 2);
         entrarFila(aux, &f);
     }
 }
@@ -230,13 +230,13 @@ bool inserirABB(NO **raiz, int ch)
 
 bool verifica(NO *p, int min, int max)
 {
-    if(p == NULL)
+    if (p == NULL)
         return true;
 
-    if(p->chave < min || p->chave > max)
+    if (p->chave < min || p->chave > max)
         return false;
 
-    return verifica(p->esq, min, p->chave-1) && verifica(p->dir, p->chave+1, max);
+    return verifica(p->esq, min, p->chave - 1) && verifica(p->dir, p->chave + 1, max);
 }
 #pragma endregion
 
@@ -245,20 +245,21 @@ int main()
     NO *raiz;
     inicializar(&raiz);
 
-    int m[16] = {10, 5, 15, 3, 7, 13, 18, 2, 4, 15, 6, 8, 12, 14, 17, 19};
-    int tst[] = {10, 5, 15, 3, 7, 13, 18, 2, 4, 15, 6, 8, 12, 14, 17, 19};
-    for (int i = 0; i < 16; i++)
+    int m[6][15] = {
+        {20, 5, 15, 3, 7, 13, 18, 2, 4, 6, 8, 12, 14, 17, 19},
+        {10, 1, 15, 3, 7, 13, 18, 2, 4, 6, 8, 12, 14, 17, 19},
+        {10, 5, 15, 3, 7, 13, 18, 2, 4, 6, 8, 12, 16, 17, 19},
+        {20, 5, 15, 3, 7, 13, 18, 2, 4, 6, 8, 12, 14, 17, 19},
+        {10, 5, 15, 3, 7, 13, 20, 2, 4, 6, 8, 12, 14, 17, 21},
+        {10, 5, 15, 3, 7, 9, 18, 2, 4, 6, 8, 12, 14, 17, 19}};
+
+    for (int i = 0; i < 6; i++)
     {
-        inserirABB(&raiz, tst[i]);
+        inicializar(&raiz);
+        preencherArvore(&raiz, 15, m[i]);
+        organizar(&raiz);
+        printf("### TESTE %d ###", i);
+        print2DUtil(raiz, 0);
+        printf(verifica(raiz, INT_MIN, INT_MAX) ? "\ncorreto\n" : "\nincorreto\n");
     }
-
-    NO *pai;
-    NO *aux = busca(raiz, 5, &pai);
-    aux->chave = 11;
-
-    pai = NULL;
-    printf(verifica(raiz, INT_MIN, INT_MAX) ? "\ntrue\n" : "\nfalse\n");
-    organizar(&raiz);
-    print2DUtil(raiz, 0);
-    printf(verifica(raiz, INT_MIN, INT_MAX) ? "\ntrue\n" : "\nfalse\n");
 }
