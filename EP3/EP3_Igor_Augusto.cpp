@@ -4,6 +4,8 @@
 #include <string.h>
 #include <climits>
 
+//Igor Augusto dos Santos - 11796851
+
 // ######### ESCREVA O NROUSP AQUI
 const char *nroUSP()
 {
@@ -31,9 +33,10 @@ typedef struct
 } lista;
 
 void organizar(NO **raiz);
-NO *erro(NO *p, int min, int max, NO **pai);
 void anexar(lista *l, NO *chave, NO *pai);
 void PreencherLista(lista *l, NO *p, NO *pai);
+int nivel(NO* p, int ch, int level);
+bool verificaLista(lista *l, int ignorar);
 
 int nivel(NO* p, int ch, int level)
 {
@@ -109,23 +112,6 @@ bool verificaLista(lista *l, int ignorar)
     }
 
     return true;
-}
-
-NO *erro(NO *p, int min, int max, NO **pai)
-{
-    if (!p)
-        return NULL;
-
-    if (p->chave < min || p->chave > max)
-        return p;
-
-    (*pai) = p;
-    NO *aux = erro(p->esq, min, p->chave - 1, pai);
-    if (aux)
-        return aux;
-
-    (*pai) = p;
-    return erro(p->dir, p->chave + 1, max, pai);
 }
 
 //------------------------------------------
