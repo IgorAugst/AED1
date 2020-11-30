@@ -32,10 +32,26 @@ typedef struct
 
 void organizar(NO **raiz);
 NO *erro(NO *p, int min, int max, NO **pai);
-void anexar(lista *l, NO *chave, NO* pai);
-void PreencherLista(lista *l, NO *p, NO* pai);
+void anexar(lista *l, NO *chave, NO *pai);
+void PreencherLista(lista *l, NO *p, NO *pai);
 
-void anexar(lista *l, NO *chave, NO* pai)
+int nivel(NO* p, int ch, int level)
+{
+    if (p == NULL)
+        return 0;
+
+    if (p->chave == ch)
+        return level;
+
+    int abaixo = nivel(p->esq, ch, level + 1);
+    if (abaixo != 0)
+        return abaixo;
+
+    abaixo = nivel(p->dir, ch, level + 1);
+    return abaixo;
+}
+
+void anexar(lista *l, NO *chave, NO *pai)
 {
     NoLista *novo;
     NoLista *ant = l->inicio;
@@ -57,7 +73,7 @@ void anexar(lista *l, NO *chave, NO* pai)
         ant->prox = novo;
 }
 
-void PreencherLista(lista *l, NO *p, NO* pai)
+void PreencherLista(lista *l, NO *p, NO *pai)
 {
     if (p)
     {
@@ -66,7 +82,34 @@ void PreencherLista(lista *l, NO *p, NO* pai)
         PreencherLista(l, p->dir, p);
     }
 }
-/*
+
+bool verificaLista(lista *l, int ignorar)
+{
+    NoLista *atual = l->inicio;
+
+    int count = 0;
+    int maior = INT_MIN;
+    while (atual)
+    {
+        if (count == ignorar)
+        {
+            continue;
+        }
+        if (atual->NoArvore->chave < maior)
+        {
+            return false;
+        }
+        else
+        {
+            maior = atual->NoArvore->chave;
+            atual = atual->prox;
+            count++;
+        }
+    }
+
+    return true;
+}
+
 NO *erro(NO *p, int min, int max, NO **pai)
 {
     if (!p)
@@ -83,33 +126,66 @@ NO *erro(NO *p, int min, int max, NO **pai)
     (*pai) = p;
     return erro(p->dir, p->chave + 1, max, pai);
 }
-*/
+
 //------------------------------------------
 // O EP consiste em implementar esta funcao
 //------------------------------------------
 void organizar(NO **raiz)
 {
-    lista *l = (lista*)malloc(sizeof(lista));
+    lista *l = (lista *)malloc(sizeof(lista));
     l->inicio = NULL;
+    lista *erros = (lista *)malloc(sizeof(lista));
+    erros->inicio = NULL;
 
     PreencherLista(l, *raiz, NULL);
 
     NoLista *atual = l->inicio;
     int maior = INT_MIN;
-    NO* errado = NULL;
-    NO* pai = NULL;
+    NO *errado = NULL;
+    NO *pai = NULL;
+    NoLista *ant = NULL;
+    int ignora = 0;
 
-    while(atual){
-        if(atual->NoArvore->chave < maior){
+    while (atual)
+    {
+        if (atual->NoArvore->chave < maior)
+        {
             errado = atual->NoArvore;
             pai = atual->NoPai;
             break;
-        }else{
+        }
+        else
+        {
+            ant = atual;
             maior = atual->NoArvore->chave;
             atual = atual->prox;
+            ignora++;
         }
     }
-    
+
+    if(errado == NULL){
+        return;
+    }
+
+    if (!verificaLista(l, ignora))
+    {
+        anexar(erros, errado, pai);
+    }
+
+    if (!verificaLista(l, ignora - 1))
+    {
+        anexar(erros, ant->NoArvore, ant->NoPai);
+    }
+
+    errado = erros->inicio->NoArvore;
+    pai = erros->inicio->NoPai;
+
+    if(erros->inicio->prox != NULL){
+        if(nivel(*raiz, erros->inicio->NoArvore->chave, 1) > nivel(*raiz, erros->inicio->prox->NoArvore->chave, 1)){
+            errado = erros->inicio->prox->NoArvore;
+            pai = erros->inicio->prox->NoPai;
+        }
+    }
 
     if (errado == NULL)
         return;
