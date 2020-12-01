@@ -97,6 +97,7 @@ bool verificaLista(lista *l, int ignorar)
         if (count == ignorar)
         {
             count++;
+            atual = atual->prox;
             continue;
         }
         if (atual->NoArvore->chave < maior)
@@ -154,12 +155,12 @@ void organizar(NO **raiz)
         return;
     }
 
-    if (!verificaLista(l, ignora))
+    if (verificaLista(l, ignora))
     {
         anexar(erros, errado, pai);
     }
 
-    if (!verificaLista(l, ignora - 1))
+    if (verificaLista(l, ignora - 1))
     {
         anexar(erros, ant->NoArvore, ant->NoPai);
     }
