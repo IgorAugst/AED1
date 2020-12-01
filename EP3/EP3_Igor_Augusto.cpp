@@ -165,6 +165,10 @@ void organizar(NO **raiz)
         anexar(erros, ant->NoArvore, ant->NoPai);
     }
 
+    if(erros->inicio == NULL){
+        return;
+    }
+
     errado = erros->inicio->NoArvore;
     pai = erros->inicio->NoPai;
 
